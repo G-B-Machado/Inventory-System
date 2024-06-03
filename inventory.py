@@ -72,7 +72,7 @@ def delete_product(id):
         print(f"Product with ID {id} not found.")
 
 # Inventory control system menu
-def menu(choice):
+def manage_menu(choice):
     if choice == '1':
         display_inventory()
     elif choice == '2':
@@ -103,16 +103,38 @@ def menu(choice):
 def main():
     while True:
         print("\nInventory Control System")
-        print("1. Display inventory")
-        print("2. Add product")
-        print("3. Modify product")
-        print("4. Delete product")
+
+        print("1. Search Product")
+        print("2. Calculate the inventory value")
+        print("3. Check the inventory")
+        print("4. Manage products")
         print("5. Exit")
+
+        navegation = input("Choose an option: ")
         
-        choice = input("Choose an option: ")
-        # Run the menu
-        if menu(choice) == False:
-            break
+        match navegation:
+            case '1':
+                print("Search Product")
+            case '2':
+                print("Calculate the inventory value")
+            case '3':
+                print("Check the inventory")
+            case '4':
+                while True:
+                    print("\nInventory Control System")
+                    print("1. Display inventory")
+                    print("2. Add product")
+                    print("3. Modify product")
+                    print("4. Delete product")
+                    print("5. Exit")
+                    choice = input("Choose an option: ")
+                    # Run the menu
+                    if manage_menu(choice) == False:
+                        break
+            case _: 
+                print("5. Exit")
+                break
+        
 
 if __name__ == '__main__':
     main()
