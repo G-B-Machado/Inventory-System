@@ -90,8 +90,32 @@ def calculate_inventory():
     total = (df.price * df.quantity).sum()
     print(total)
 
-def calculate_inventory_by_supplier():
+def calculate_inventory_by_supplier(supplier):
     df = read_inventory()
+    if supplier in df['supplier'].astype(str).values:
+        supplier_df = df[df['supplier'] == supplier]
+        total = (supplier_df.price * supplier_df.quantity).sum()
+        print(total)
+    else:
+        print(f"Supplier with Name {supplier} not found.")
+
+def calculate_inventory_by_manufacturer(manufacturer):
+    df = read_inventory()
+    if manufacturer in df['manufacturer'].astype(str).values:
+        manufacturer_df = df[df['manufacturer'] == manufacturer]
+        total = (manufacturer_df.price * manufacturer_df.quantity).sum()
+        print(total)
+    else:
+        print(f"Manufacturer with Name {manufacturer} not found.")
+
+def calculate_inventory_by_product(product):
+    df = read_inventory()
+    if product in df['name'].astype(str).values:
+        product = df[df['name'] == product]
+        total = (product['quantity'] * product['price']).iloc[0]
+        print(total)
+    else:
+        print(f"Product with Name {product} not found.")
 
 # Inventory control system menu
 def manage_menu(choice):
@@ -134,8 +158,14 @@ def calculate_menu(choice):
     if choice == '1':
         calculate_inventory()
     elif choice == '2':
-        name = input("Name of the product to search: ")
-        search_product_by_name(name)
+        supplier = input("Name of the Supplier to calculete: ")
+        calculate_inventory_by_supplier(supplier)
+    elif choice == '3':
+        manufacturer = input("Name of the Manufacturer to calculete: ")
+        calculate_inventory_by_manufacturer(manufacturer)
+    elif choice == '4':
+        product = input("Name of the product to calculete: ")
+        calculate_inventory_by_product(product)
 
 def main():
     while True:
