@@ -1,0 +1,31 @@
+Report for a Student Chosen Project
+
+Do the following:
+
+1. In the table below, list the dates, amount of time spent, and
+description of the work that you did on your project. Follow the example
+that is in the first row of the table below. Include the time you spent
+doing any of the following:
+    a. discussing your project with your teacher, tutor, or fellow students
+    b. researching by reading articles and watching applicable videos
+    c. designing your project by drawing diagrams and other applicable documents
+    d. writing experimental code
+    d. writing code for your project
+    e. writing test functions
+    f. debugging your code
+    g. any other activity that helped you complete your project
+
+=============Report Time====================
+            Time Spent
+   Date       (hours)   Description of Work
+----------  ----------  -------------------------
+2024-05-31      3      I thought and wrote down some ideas of what to do. I created some prototypes
+2024-06-02      1.5    I watched and read some articles about pandas.
+2024-06-03      2      Wrote 4 functions (CRUD) and created a interactive menu for prompt 
+=============Report Time====================
+
+
+
+2. In Canvas, submit this completed text file, your Python program, your
+Python test file, and any project data files such as .txt and .csv files and
+link to video walkthrough if needed.

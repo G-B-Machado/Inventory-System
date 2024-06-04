@@ -71,6 +71,28 @@ def delete_product(id):
     else:
         print(f"Product with ID {id} not found.")
 
+def search_product_by_id(id):
+    df = read_inventory()
+    if id in df['id'].astype(str).values:
+        print(df)
+    else:
+        print(f"Product with ID {id} not found.")
+
+def search_product_by_name(name):
+    df = read_inventory()
+    if name in df['name'].astype(str).values:
+        print(df)
+    else:
+        print(f"Product with Name {name} not found.")
+
+def calculate_inventory():
+    df = read_inventory()
+    total = (df.price * df.quantity).sum()
+    print(total)
+
+def calculate_inventory_by_supplier():
+    df = read_inventory()
+
 # Inventory control system menu
 def manage_menu(choice):
     if choice == '1':
@@ -100,6 +122,21 @@ def manage_menu(choice):
     else:
         print("Invalid option. Please try again.")
 
+def search_menu(choice):
+    if choice == '1':
+        id = input("ID of the product to search: ")
+        search_product_by_id(id)
+    elif choice == '2':
+        name = input("Name of the product to search: ")
+        search_product_by_name(name)
+
+def calculate_menu(choice):
+    if choice == '1':
+        calculate_inventory()
+    elif choice == '2':
+        name = input("Name of the product to search: ")
+        search_product_by_name(name)
+
 def main():
     while True:
         print("\nInventory Control System")
@@ -114,9 +151,27 @@ def main():
         
         match navegation:
             case '1':
-                print("Search Product")
+                print("\nInventory Control System")
+                print("1. Search for ID")
+                print("2. Search for name")
+                print("3. Exit")
+                choice = input("Choose an option: ")
+                if choice != '3':
+                    search_menu(choice)
+                else:
+                    break
             case '2':
-                print("Calculate the inventory value")
+                print("\nInventory Control System")
+                print("1. Calculate inventary")
+                print("2. Calculate inventary by Supplier")
+                print("3. Calculate inventary by Manufacturer")
+                print("4. Calculate inventary by Product")
+                print("5. Exit")
+                choice = input("Choose an option: ")
+                if choice != '5':
+                    calculate_menu(choice)
+                else:
+                    break
             case '3':
                 print("Check the inventory")
             case '4':
