@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from pathlib import Path
 from datetime import datetime
 
@@ -81,7 +82,7 @@ def search_product_by_id(id):
 def search_product_by_name(name):
     df = read_inventory()
     if name in df['name'].astype(str).values:
-        print(df)
+        print(df[df['name'] == name])
     else:
         print(f"Product with Name {name} not found.")
 
@@ -167,6 +168,21 @@ def calculate_menu(choice):
         product = input("Name of the product to calculete: ")
         calculate_inventory_by_product(product)
 
+def check_inventory():
+    df = read_inventory()
+    conditions = [
+        (df['quantity'] < df['min_quantity']),
+        (df['quantity'] > df['max_quantity']),
+        (df['quantity'] >= df['min_quantity']) & (df['quantity'] <= df['max_quantity'])
+    ]
+    
+    choices = ['Stock is low', 'Stock is high', 'Stock is adequate']
+    
+    df['status'] = np.select(conditions, choices, default='Unknown status')
+    
+    print(df[['id', 'name', 'quantity', 'status']])
+
+
 def main():
     while True:
         print("\nInventory Control System")
@@ -203,7 +219,7 @@ def main():
                 else:
                     break
             case '3':
-                print("Check the inventory")
+                check_inventory()
             case '4':
                 while True:
                     print("\nInventory Control System")
