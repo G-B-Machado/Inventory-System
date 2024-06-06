@@ -5,6 +5,7 @@ def test_add_product():
     add_product('P3', 'Product3', 8, 2, 10, 150, 'Supplier3', 'Manufacturer3', True)
     df = read_inventory(True)
     assert 'P3' in df['id'].astype(str).values
+    assert len(df) > 2
 
 def test_modify_product():
     modify_product('P1','NewProduct1', 20, 150, True)
@@ -17,6 +18,7 @@ def test_delete_product():
     delete_product('P2', True)
     df = read_inventory(True)
     assert not 'P2' in df['id'].astype(str).values
+    assert len(df) < 3
 
 if __name__ == "__main__":
     pytest.main(["-v", "--tb=line", "-rN", __file__])
