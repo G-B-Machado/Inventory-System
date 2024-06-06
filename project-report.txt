@@ -21,7 +21,10 @@ doing any of the following:
 ----------  ----------  -------------------------
 2024-05-31      3      I thought and wrote down some ideas of what to do. I created some prototypes
 2024-06-02      1.5    I watched and read some articles about pandas.
-2024-06-03      2      Wrote 4 functions (CRUD) and created a interactive menu for prompt 
+2024-06-03      2      Wrote 4 functions (CRUD) and created a interactive menu for prompt
+2024-06-03      3.5     Wrote new features (Search product, calculate inventory, check inventory) and updated the menu system.
+2024-06-04      3      Reviewing and optimizing code
+2024-06-04      3      Wrote a test function to CRUD
 =============Report Time====================
 
 

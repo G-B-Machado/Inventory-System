@@ -6,19 +6,26 @@ from datetime import datetime
 #Get the path of the file 'inventory.csv'
 # Name of the CSV file that stores the inventory data
 csv_file = Path(__file__).parent / 'inventory.csv'
+csv_file_test = Path(__file__).parent / 'test_inventory.csv'
 
 # Function to read the CSV file and return a DataFrame
-def read_inventory():
+def read_inventory(test = None):
     try:
-        df = pd.read_csv(csv_file)
+        if test:
+            df = pd.read_csv(csv_file_test)
+        else:
+            df = pd.read_csv(csv_file)
     except FileNotFoundError:
         # If the file doesn't exist, create an empty DataFrame with the necessary columns
         df = pd.DataFrame(columns=['id', 'name', 'quantity', 'price'])
     return df
 
 # Function to save the DataFrame to the CSV file
-def save_inventory(df):
-    df.to_csv(csv_file, index=False)
+def save_inventory(df, test):
+    if test:
+        df.to_csv(csv_file_test, index=False)
+    else:
+        df.to_csv(csv_file, index=False)
 
 # Function to display the current inventory
 def display_inventory():
@@ -38,17 +45,17 @@ def get_information_to_add_product():
     return [id, name, quantity, min_quantity, max_quantity, supplier, manufacturer, price]
 
 # Function to add a new product
-def add_product(id, name, quantity, min_quantity, max_quantity, price, supplier, manufacturer):
+def add_product(id, name, quantity, min_quantity, max_quantity, price, supplier, manufacturer, test = None):
     now = datetime.now()
-    df = read_inventory()
+    df = read_inventory(test)
     new_product = pd.DataFrame([[id, name, quantity, min_quantity, max_quantity, price, supplier, manufacturer, now]], columns=['id', 'name', 'quantity', 'min_quantity', 'max_quantity', 'price', 'supplier', 'manufacturer', 'last_movimentation'])
     df = pd.concat([df, new_product], ignore_index=True)
-    save_inventory(df)
+    save_inventory(df, test)
     print(f"Product '{name}' added successfully!")
 
 # Function to modify an existing product
-def modify_product(id, name=None, quantity=None, price=None):
-    df = read_inventory()
+def modify_product(id, name=None, quantity=None, price=None, test = None):
+    df = read_inventory(test)
 
     if id in df['id'].astype(str).values:
         if name is not None:
@@ -57,17 +64,17 @@ def modify_product(id, name=None, quantity=None, price=None):
             df.loc[df['id'] == id, 'quantity'] = quantity
         if price is not None:
             df.loc[df['id'] == id, 'price'] = price
-        save_inventory(df)
+        save_inventory(df, test)
         print(f"Product with ID {id} modified successfully!")
     else:
         print(f"Product with ID {id} not found.")
 
 # Function to delete a product
-def delete_product(id):
-    df = read_inventory()
+def delete_product(id, test = None):
+    df = read_inventory(test)
     if id in df['id'].astype(str).values:
         df = df[df['id'] != id]
-        save_inventory(df)
+        save_inventory(df, test)
         print(f"Product with ID {id} deleted successfully!")
     else:
         print(f"Product with ID {id} not found.")
@@ -75,7 +82,7 @@ def delete_product(id):
 def search_product_by_id(id):
     df = read_inventory()
     if id in df['id'].astype(str).values:
-        print(df)
+        print(df[df['id'] == id])
     else:
         print(f"Product with ID {id} not found.")
 

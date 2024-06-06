@@ -1,1 +1,4 @@
 inventory.csv
+test_inventory.csv
+*json
+*pyc
