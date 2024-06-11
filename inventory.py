@@ -69,6 +69,41 @@ def modify_product(id, name=None, quantity=None, price=None, test = None):
     else:
         print(f"Product with ID {id} not found.")
 
+def deposit_product(id, quantity, test = None):
+    df = read_inventory(test)
+
+    if id in df['id'].astype(str).values:
+        max_quantity = df.loc[df['id'] == str(id), 'max_quantity'].values[0]
+        if quantity is not None:
+            current_quantity = df.loc[df['id'] == str(id), 'quantity'].values[0]
+            new_quantity = current_quantity + quantity
+            if new_quantity < max_quantity:
+                df.loc[df['id'] == str(id), 'quantity'] = new_quantity
+                save_inventory(df, test)
+                print(f"Product with ID {id} modified successfully!")
+            else:
+                print('Maximum quantity exceeded.')
+    else:
+        print(f"Product with ID {id} not found.")
+
+def withdraw_product(id, quantity, test = None):
+    df = read_inventory(test)
+
+    if id in df['id'].astype(str).values:
+        min_quantity = df.loc[df['id'] == str(id), 'min_quantity'].values[0]
+        if quantity is not None:
+            current_quantity = df.loc[df['id'] == str(id), 'quantity'].values[0]
+            new_quantity = current_quantity - quantity
+            if new_quantity > min_quantity:
+                df.loc[df['id'] == str(id), 'quantity'] = new_quantity
+                save_inventory(df, test)
+                print(f"Product with ID {id} modified successfully!")
+            else:
+                print('Minimun quantity exceeded.')
+    else:
+        print(f"Product with ID {id} not found.")
+
+
 # Function to delete a product
 def delete_product(id, test = None):
     df = read_inventory(test)
@@ -149,6 +184,19 @@ def manage_menu(choice):
         id = input("ID of the product to delete: ")
         delete_product(id)
     elif choice == '5':
+        id = input("ID of the product to deposit: ")
+        quantity = input("Quantity of the product to deposit: ")
+        quantity = int(quantity) if quantity else None
+
+        deposit_product(id, quantity)
+        
+    elif choice == '6':
+        id = input("ID of the product to withdraw: ")
+        quantity = input("Quantity of the product to withdraw: ")
+        quantity = int(quantity) if quantity else None
+
+        withdraw_product(id, quantity)
+    elif choice == '7':
         print("Exiting the system...")
         return False
     else:
@@ -234,7 +282,9 @@ def main():
                     print("2. Add product")
                     print("3. Modify product")
                     print("4. Delete product")
-                    print("5. Exit")
+                    print("5. Deposit product")
+                    print("6. Withdraw product")
+                    print("7. Exit")
                     choice = input("Choose an option: ")
                     # Run the menu
                     if manage_menu(choice) == False:
